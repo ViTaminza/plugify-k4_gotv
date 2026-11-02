@@ -1,0 +1,19 @@
+"Databases"
+{
+	"k4_gotv"
+	{
+		// "mysql" (the production database) or "sqlite" (a local file, no server needed).
+		"driver"      "mysql"
+
+		// Fill in the connection of this server. Without this file (or without the k4_gotv
+		// section) the plugin uses a local SQLite file under <data>/k4_gotv instead.
+		"host"        ""
+		"port"        "3306"
+		"user"        ""
+		"pass"        ""
+		"database"    "k4_gotv"
+
+		// SQLite only: relative paths are resolved against <data>/k4_gotv.
+		"sqlite_path" "k4_gotv.sqlite3"
+	}
+}

@@ -1,0 +1,80 @@
+// K4-GOTV for Plugify — config.jsonc
+//
+// The original SwiftlyS2 file (k4-gotv.jsonc, section "K4GOTV") minus FTP/SFTP/Mega.nz, plus the
+// S3 block that replaces them. A root "K4GOTV" object is also accepted, so a renamed original
+// file keeps working.
+//
+// Secrets: access_key/secret_key are empty in the shipped package. Fill them in on the server and
+// keep this file readable by the server user only (the deploy step runs `chmod 600`); the plugin
+// never logs them.
+{
+	"General": {
+		"MinimumDemoDuration": 5.0,
+		"DeleteDemoAfterUpload": true,
+		"DeleteZippedDemoAfterUpload": true,
+		"DeleteEveryDemoFromServerAfterServerStart": false,
+		"LogUploads": true,
+		"LogDeletions": true,
+		"RegularFileNamingPattern": "{fileName}_{map}_{date}_{time}",
+		"CropRoundsFileNamingPattern": "{fileName}_{map}_round{round}_{date}_{time}",
+		"DemoDirectory": "demos",
+		"AutoCleanupEnabled": false,
+		"AutoCleanupIntervalMinutes": 60,
+		"AutoCleanupFileAgeHours": 48
+	},
+	"AutoRecord": {
+		"Enabled": false,
+		"CropRounds": false,
+		"StopOnIdle": false,
+		"RecordWarmup": true,
+		"IdlePlayerCountThreshold": 0,
+		"IdleTimeSeconds": 300
+	},
+	"Discord": {
+		"WebhookURL": "",
+		"WebhookAvatar": "",
+		"WebhookUploadFile": true,
+		"WebhookName": "CSGO Demo Bot",
+		"EmbedTitle": "New CSGO Demo Available",
+		"MessageText": "@everyone New CSGO Demo Available!",
+		"ServerBoost": 0
+	},
+	"DemoRequest": {
+		"Enabled": false,
+		"PrintAll": true,
+		"DeleteUnused": true
+	},
+	"S3": {
+		// S3-compatible endpoint, HTTPS only (port 443 unless the host names another port).
+		// "s3.example.com" or "https://s3.example.com"; no path. An explicit default port
+		// (:443 for https, :80 for http) is dropped automatically so the signed Host matches.
+		"endpoint": "https://firsts3.ru",
+		"region": "us-east-1",
+		"bucket": "cs2-gotv",
+		"access_key": "",
+		"secret_key": "",
+		// Replace <server> with this server's identifier; a trailing '/' is added automatically.
+		"prefix": "demos/<server>/",
+		// Path-style requests: https://<endpoint>/<bucket>/<key>.
+		"path_style": true,
+		// Files up to one part use a single PUT; bigger files use multipart uploads.
+		// S3 requires at least 5 MiB per part; 16 MiB is a good default for demos.
+		"part_size_mb": 16,
+		// Delete uploaded objects older than retention_days (checked hourly, like the original's
+		// FTP/Mega retention).
+		"retention_enabled": false,
+		"retention_days": 3
+	},
+	"Http": {
+		// Transport for S3 uploads and Discord webhooks:
+		//   "auto"  - libcurl (dlopen'ed at runtime) whenever it loads on the host; ISteamHTTP
+		//             only when libcurl is unavailable.
+		//   "steam" - ISteamHTTP only (the original transport; on the live server it delivers the
+		//             PUT but then loses the response, so the plugin reports a failure while the
+		//             object is in the bucket - diagnostic use only).
+		//   "curl"  - libcurl only.
+		"transport": "auto",
+		// Optional CA bundle for the libcurl transport (empty = libcurl's compiled-in/system store).
+		"ca_file": ""
+	}
+}

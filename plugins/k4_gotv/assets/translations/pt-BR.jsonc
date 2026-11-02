@@ -1,0 +1,8 @@
+{
+	// K4-GOTV Translations
+	"k4.general.prefix": "[ [darkred]K4-Demo [default]]",
+
+	// Demo request messages
+	"k4.chat.demo.request.all": "[darkred]{0} [green]solicitou que a demo seja enviada ao final do round",
+	"k4.chat.demo.request.self": "[green]Você solicitou que a demo seja enviada ao final do round"
+}

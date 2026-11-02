@@ -1,0 +1,19 @@
+{
+	"$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/plugin.schema.json",
+	"version": "${K4_GOTV_VERSION}",
+	"name": "k4_gotv",
+	"description": "Port of the SwiftlyS2 plugin K4-GOTV (K4ryuu/K4-GOTV-SwiftlyS2 1.0.2): automatic GOTV recording (round-based crop, idle stop, warmup option, minimum duration), the !demo request command, Discord webhook notifications with the original embed and optional zip attachment, MySQL logging into the original `k4-gotv` table (SQLite fallback) and local demo cleanup. FTP/SFTP/Mega.nz are not ported: finished demos are uploaded to an S3-compatible endpoint (AWS Signature V4, single PUT or multipart, retention through ListObjectsV2/DeleteObject). Config: configs/k4_gotv/config.jsonc (secrets empty in the package; chmod 600 on deploy), payload/translations under configs/k4_gotv/.",
+	"author": "K4ryuu, ported to Plugify",
+	"website": "https://github.com/untrustedmodders/plugify",
+	"license": "GPL-3.0",
+	"entry": "bin/k4_gotv",
+	"platforms": [],
+	"language": "cpp",
+	"dependencies": [
+		{
+			"name": "s2sdk",
+			"constraints": ">=3.0.0"
+		}
+	],
+	"methods": []
+}
